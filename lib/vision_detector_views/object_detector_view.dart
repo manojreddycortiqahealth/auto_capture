@@ -82,7 +82,9 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
 
     // uncomment next lines if you want to use a local model
     // make sure to add tflite model to assets/ml
-    final path = 'assets/ml/object_labeler.tflite';
+    // final path = 'assets/ml/object_labeler.tflite';
+    final path = 'assets/ml/detect_with_metadata.tflite';
+
     final modelPath = await _getModel(path);
     final options = LocalObjectDetectorOptions(
       mode: mode,
@@ -141,10 +143,9 @@ class _ObjectDetectorView extends State<ObjectDetectorView> {
     // capture the image if the confidence is greater than 90 percent.
     if ((coinObject?.confidence ?? 0) > 0.9 && !_isImageCaptureInProgress) {
       _isImageCaptureInProgress = true;
+      await _controller?.stopImageStream();
       _controller?.takePicture().then((value) {
         print('captured image path: ${value.path}');
-      }).whenComplete(() {
-        _isImageCaptureInProgress = false;
       });
     }
 

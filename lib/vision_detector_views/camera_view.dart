@@ -316,6 +316,9 @@ class _CameraViewState extends State<CameraView> {
 
   Future _processCameraImage(CameraImage image) async {
     final WriteBuffer allBytes = WriteBuffer();
+    print('image.planes:${image.planes}');
+    print('image.format:${image.format.group}');
+
     for (final Plane plane in image.planes) {
       allBytes.putUint8List(plane.bytes);
     }
